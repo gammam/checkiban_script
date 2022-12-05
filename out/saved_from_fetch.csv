@@ -1,0 +1,2 @@
+requestId,status,account,taxCode,validationStatus,errorCode,errorDescription
+,KO,-,-,,API502,Gateway timeOut
