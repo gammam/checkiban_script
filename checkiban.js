@@ -14,8 +14,8 @@ class CheckibanClient {
          checkIbanUrl = options.CHECKIBAN_BASEPATH + options.CHECKIBAN_PATH;
          secret_api_key =  options.CHECKIBAN_API_KEY; 
     }
-    fromCsvToCsv(inputFilename,firstElement,lastElement,outputFilename) {
-        return checkibanFromCsv(inputFilename,firstElement,lastElement,outputFilename) 
+    fromCsvToCsv(inputFilename,firstElement,lastElement,outputFilename,options) {
+        return checkibanFromCsv(inputFilename,firstElement,lastElement,outputFilename,options) 
     }
 }
 
@@ -36,7 +36,7 @@ const columns = [
   "errorDescription"
 ];
 
-const stringifier = stringify({ header: true, columns: columns });
+let  stringifier ;
 
 
 
@@ -80,10 +80,14 @@ const responseData = await response.json()
 
 
 
-   const checkibanFromCsv = (inputFilename,firstElement,lastElement,outputFilename ) => {
+   const checkibanFromCsv = (inputFilename,firstElement,lastElement,outputFilename,options) => {
     console.log('CheckIbanUrl : ', checkIbanUrl) 
     console.log(new Date(),"- Started processing ",inputFilename," from ", firstElement ," to ", lastElement ," rows");
-    var writableStream = createWriteStream(outputFilename,{flags:'w'});
+    
+    // console.log(options);
+    stringifier = options.flags == 'a' ? stringify({ header: false, columns: columns }) : stringify({ header: true, columns: columns })
+    
+    var writableStream = createWriteStream(outputFilename,options);
     new Promise((resolve, reject) => {  
     const promises = [];
     createReadStream(inputFilename)
