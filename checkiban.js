@@ -82,7 +82,7 @@ const responseData = await response.json()
 
    const checkibanFromCsv = (inputFilename,firstElement,lastElement,outputFilename ) => {
     console.log('CheckIbanUrl : ', checkIbanUrl) 
-    console.log("Started processing ",inputFilename," from ", firstElement ," to ", lastElement ," rows");
+    console.log(new Date(),"- Started processing ",inputFilename," from ", firstElement ," to ", lastElement ," rows");
     var writableStream = createWriteStream(outputFilename,{flags:'w'});
     new Promise((resolve, reject) => {  
     const promises = [];
@@ -111,7 +111,7 @@ const responseData = await response.json()
         // console.log("results:",stringifier)
         stringifier.pipe(writableStream);
         
-        console.log("Finished writing data on ",outputFilename);
+        console.log(new Date(), "- Finished writing data on ",outputFilename);
     })
     })
 }
